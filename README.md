@@ -38,3 +38,109 @@ Example Output:
 (valid):
 {"message":"The Blockchain is valid."}
 ```
+## Result
+### Get Chain data
+```
+curl --location --request GET 'http://localhost:4100/api/v1/chain/get-chain'
+```
+```
+{
+    "data": {
+        "chain": [
+            {
+                "index": 0,
+                "previousHash": "0",
+                "timestamp": 1644537600000,
+                "transactions": "Initial Block in the Chain",
+                "proof": 0,
+                "hash": "0b3ce6dec5a0be4c1c49b63decc7fb3abd52a3e2a30a9109d3e000535b4a61c7"
+            }
+        ],
+        "difficulty": 3
+    },
+    "processingTimeMillis": 0,
+    "message": "All Chain Data",
+    "statusCode": 200,
+    "success": true
+}
+```
+### Validate Chain 
+```
+curl --location --request GET 'http://localhost:4100/api/v1/chain/validate-chain'
+```
+```
+{
+    "data": true,
+    "processingTimeMillis": 0,
+    "message": "The Blockchain is valid.",
+    "statusCode": 200,
+    "success": true
+}
+```
+### Mine Block
+```
+curl --location --request POST 'http://localhost:4100/api/v1/chain/mine-block' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "to": "0xC28f57247F7b4C83DFBe717a4d4B3eA5dF4F6c3f",
+    "from": "0xfd6C0EDf95eafCf42457e565BF07c38C4fC17a14",
+    "amount": 4
+}'
+```
+```
+{
+    "data": {
+        "index": 1,
+        "previousHash": "0b3ce6dec5a0be4c1c49b63decc7fb3abd52a3e2a30a9109d3e000535b4a61c7",
+        "timestamp": 1644600014943,
+        "transactions": {
+            "to": "0xC28f57247F7b4C83DFBe717a4d4B3eA5dF4F6c3f",
+            "from": "0xfd6C0EDf95eafCf42457e565BF07c38C4fC17a14",
+            "amount": 4
+        },
+        "proof": 2591,
+        "hash": "000dd6021748cbc1681d06c0e50f772564f73f180e1ea0dbcc0d8b689241d9a9"
+    },
+    "processingTimeMillis": 23,
+    "message": "A block is MINED",
+    "statusCode": 200,
+    "success": true
+}
+```
+### After mining chain 
+```
+curl --location --request GET 'http://localhost:4100/api/v1/chain/get-chain'
+```
+```
+{
+    "data": {
+        "chain": [
+            {
+                "index": 0,
+                "previousHash": "0",
+                "timestamp": 1644537600000,
+                "transactions": "Initial Block in the Chain",
+                "proof": 0,
+                "hash": "0b3ce6dec5a0be4c1c49b63decc7fb3abd52a3e2a30a9109d3e000535b4a61c7"
+            },
+            {
+                "index": 1,
+                "previousHash": "0b3ce6dec5a0be4c1c49b63decc7fb3abd52a3e2a30a9109d3e000535b4a61c7",
+                "timestamp": 1644600014943,
+                "transactions": {
+                    "to": "0xC28f57247F7b4C83DFBe717a4d4B3eA5dF4F6c3f",
+                    "from": "0xfd6C0EDf95eafCf42457e565BF07c38C4fC17a14",
+                    "amount": 4
+                },
+                "proof": 2591,
+                "hash": "000dd6021748cbc1681d06c0e50f772564f73f180e1ea0dbcc0d8b689241d9a9"
+            }
+        ],
+        "difficulty": 3
+    },
+    "processingTimeMillis": 0,
+    "message": "All Chain Data",
+    "statusCode": 200,
+    "success": true
+}
+```
